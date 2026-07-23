@@ -612,7 +612,9 @@ class SingleEraser(ClusterWizard) :
             selected_single_idx = list(self.single_layer.selected_data)
             modified_cluster_ids = self.single_layer.features.loc[selected_single_idx, ["cluster_id"]].to_numpy().flatten()
 
+
             for cluster_id, count in zip(*np.unique(modified_cluster_ids, return_counts=True)): # Then update number of spots in cluster
+                    print(f"updating cluster {cluster_id}")
                     if cluster_id == -1 : continue
                     new_spot_number = len(self.single_layer.features.loc[self.single_layer.features['cluster_id'] == cluster_id]) - count #minus number of spot with this cluster id we remove
                     self.cluster_layer.features.loc[self.cluster_layer.features['cluster_id'] == cluster_id, ["spot_number"]] = new_spot_number
@@ -638,8 +640,12 @@ class ClusterCleaner(ClusterWizard) :
             
             if len(drop_idx) > 0 :
                 print("Removing {} empty cluster(s)".format(len(drop_idx)))
+
+                self.cluster_layer.events.features.disconnect(delete_empty_cluster)
                 self.cluster_layer.data = np.delete(self.cluster_layer.data, drop_idx, axis=0)
+                self.cluster_layer.features = self.cluster_layer.features.drop(drop_idx)
                 self.cluster_layer.refresh()
+                self.cluster_layer.events.features.connect(delete_empty_cluster)
 
         self.cluster_layer.events.features.connect(delete_empty_cluster)
 
