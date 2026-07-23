@@ -142,7 +142,9 @@ def spots_colocalisation(
     #No cluster or no spots case
     if spot_list1 is np.nan or spot_list2 is np.nan : 
         return np.nan
-    if len(spot_list1) == 0 or len(spot_list2) == 0 : 
+    if len(spot_list1) == 0 or len(spot_list2) == 0 :
+
+        print("empty returning nan") 
         return np.nan
     
     #Dim check
