@@ -61,26 +61,23 @@ def compute_Spots(
         in_nuc_list = np.nan
     if type(cell_label) != type(None) :
 
+
         # Collect all labels that are on fov edge
         if cell_label.ndim == 3 :
-            on_edge_labels = np.unique(
-                np.concatenate([
-                    cell_label[:,:,0],
-                    cell_label[:,:,-1],
-                    cell_label[:,0,:],
-                    cell_label[:,-1,:],
-                ])
-            ).astype(int)
+            on_edge_labels = []
+            on_edge_labels.extend(cell_label[:,:,0].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,:,-1].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,0,:].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,-1,:].astype(int).tolist())
+            on_edge_labels = np.unique(on_edge_labels)
             cell_label_list = list(cell_label[index])
         else :
-            on_edge_labels = np.unique(
-                np.concatenate([
-                    cell_label[:,0],
-                    cell_label[:,-1],
-                    cell_label[0,:],
-                    cell_label[-1,:],
-                ])
-            ).astype(int)
+            on_edge_labels = []
+            on_edge_labels.extend(cell_label[:,0].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,-1].astype(int).tolist())
+            on_edge_labels.extend(cell_label[0,:].astype(int).tolist())
+            on_edge_labels.extend(cell_label[-1,:].astype(int).tolist())
+            on_edge_labels = np.unique(on_edge_labels)
             cell_label_list = list(cell_label[index[-2:]]) #Only plane coordinates
 
     else :
