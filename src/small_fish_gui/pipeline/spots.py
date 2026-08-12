@@ -69,7 +69,7 @@ def compute_Spots(
             on_edge_labels.extend(cell_label[:,:,-1].astype(int).tolist())
             on_edge_labels.extend(cell_label[:,0,:].astype(int).tolist())
             on_edge_labels.extend(cell_label[:,-1,:].astype(int).tolist())
-            on_edge_labels = np.unique(on_edge_labels)
+            banned_labels = np.unique(banned_labels)
             cell_label_list = list(cell_label[index])
         else :
             on_edge_labels = []
@@ -77,7 +77,7 @@ def compute_Spots(
             on_edge_labels.extend(cell_label[:,-1].astype(int).tolist())
             on_edge_labels.extend(cell_label[0,:].astype(int).tolist())
             on_edge_labels.extend(cell_label[-1,:].astype(int).tolist())
-            on_edge_labels = np.unique(on_edge_labels)
+            banned_labels = np.unique(banned_labels)
             cell_label_list = list(cell_label[index[-2:]]) #Only plane coordinates
 
     else :
@@ -97,7 +97,7 @@ def compute_Spots(
     })
     
     if type(cell_label) != type(None) : #Filter on edge cells
-        target_index = Spots.loc[Spots["cell_label"].isin(on_edge_labels)].index
+        target_index = Spots.loc[Spots["cell_label"].isin(banned_labels)].index
         Spots.loc[target_index,["cell_label"]] = 0
 
     return Spots
