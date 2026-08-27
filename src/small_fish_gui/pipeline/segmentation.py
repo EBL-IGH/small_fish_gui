@@ -8,7 +8,7 @@ from ..hints import pipeline_parameters
 from ..interface import get_settings
 from ..gui import prompt, ask_cancel_segmentation, segmentation_prompt
 from ..gui.napari_visualiser import show_segmentation as napari_show_segmentation
-from ..interface import open_image, SettingsDict, get_settings
+from ..interface import open_image, get_settings
 
 from .utils import from_label_get_centeroidscoords
 from ._preprocess import ask_input_parameters
@@ -24,6 +24,7 @@ import bigfish.plot as plot
 import FreeSimpleGUI as sg
 import matplotlib.pyplot as plt
 import os
+import logging
 from .utils import using_mps
 
 def launch_segmentation(user_parameters: pipeline_parameters, nucleus_label, cytoplasm_label, batch_mode=False) :
@@ -320,13 +321,22 @@ def _segmentate_object(
         cellprob_threshold : float = 0, 
         min_size = 15 #Default cellpose
         ) :
-    
+
+    print('init logger')
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(formatter)
 
     model = models.CellposeModel(
         gpu= use_gpu(),
         pretrained_model= model_name,
         use_bfloat16= not using_mps()
     )
+
+    logger.info("This message will appear in both baselog.log and the terminal.")
 
     label, flow, style = model.eval(
         im,
@@ -342,6 +352,9 @@ def _segmentate_object(
     
     label = np.array(label, dtype= np.int64)
     if not do_3D : label = remove_disjoint(label) # Too much time consuming in 3D
+
+    logger.removeHandler(console_handler)
+    
     
     return label
 
