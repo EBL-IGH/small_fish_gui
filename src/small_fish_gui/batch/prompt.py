@@ -100,6 +100,7 @@ def batch_promp(
     preset.setdefault("nucleus_segmentation_3D", preset["do_3D_segmentation"])
     preset["filename"] =  ""
     preset["other_nucleus_image"] =  ""
+    preset.setdefault("other_nucleus_image_path", preset.get("other_nucleus_image_path",""))
     preset["saving_path"] =  ""
     preset["reordered_shape"] =  None
     preset.setdefault("filename", "")
@@ -115,7 +116,7 @@ def batch_promp(
     
     apply_segmentation_button = sg.Button('apply', key='apply-segmentation')
     segmentation_layout += [[apply_segmentation_button]]
-    seg_keys_to_hide = ['show_segmentation', 'seg_control_saving_path', 'filename', 'other_nucleus_image', 'save_segmentation_visuals', 'seg_control_saving_path_browse']
+    seg_keys_to_hide = ['show_segmentation', 'seg_control_saving_path', 'filename', 'other_nucleus_image_path', 'save_segmentation_visuals', 'seg_control_saving_path_browse']
     segmentation_tab = sg.Tab("Segmentation", segmentation_layout, visible=False)
 
     #Detection tab
