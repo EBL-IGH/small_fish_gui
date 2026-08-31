@@ -322,7 +322,6 @@ def _segmentate_object(
         min_size = 15 #Default cellpose
         ) :
 
-    print('init logger')
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     console_handler = logging.StreamHandler()

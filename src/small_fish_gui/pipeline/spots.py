@@ -65,18 +65,18 @@ def compute_Spots(
         # Collect all labels that are on fov edge
         if cell_label.ndim == 3 :
             on_edge_labels = []
-            on_edge_labels.extend(cell_label[:,:,0].astype(int).tolist())
-            on_edge_labels.extend(cell_label[:,:,-1].astype(int).tolist())
-            on_edge_labels.extend(cell_label[:,0,:].astype(int).tolist())
-            on_edge_labels.extend(cell_label[:,-1,:].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,:,0].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[:,:,-1].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[:,0,:].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[:,-1,:].astype(int).ravel().tolist())
             banned_labels = np.unique(on_edge_labels)
             cell_label_list = list(cell_label[index])
         else :
             on_edge_labels = []
-            on_edge_labels.extend(cell_label[:,0].astype(int).tolist())
-            on_edge_labels.extend(cell_label[:,-1].astype(int).tolist())
-            on_edge_labels.extend(cell_label[0,:].astype(int).tolist())
-            on_edge_labels.extend(cell_label[-1,:].astype(int).tolist())
+            on_edge_labels.extend(cell_label[:,0].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[:,-1].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[0,:].astype(int).ravel().tolist())
+            on_edge_labels.extend(cell_label[-1,:].astype(int).ravel().tolist())
             banned_labels = np.unique(on_edge_labels)
             cell_label_list = list(cell_label[index[-2:]]) #Only plane coordinates
 

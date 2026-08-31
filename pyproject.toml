@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "small_fish_gui"
-version = "2.3.4"
+version = "2.3.5"
 authors = [
   { name="Slimani Floric", email="floric.slimani@live.fr" },
 ]
@@ -17,7 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-"big-fish-reloaded==0.6.3",
+"big-fish-reloaded>=0.6.2",
 "AF-eraser>=0.1.0",
 "cellpose>=4.0.6",
 "czifile>=2019.7.2",
