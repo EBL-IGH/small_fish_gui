@@ -328,14 +328,13 @@ def _segmentate_object(
     console_handler.setLevel(logging.INFO)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     console_handler.setFormatter(formatter)
+    logger.addHandler(console_handler)
 
     model = models.CellposeModel(
         gpu= use_gpu(),
         pretrained_model= model_name,
         use_bfloat16= not using_mps()
     )
-
-    logger.info("This message will appear in both baselog.log and the terminal.")
 
     label, flow, style = model.eval(
         im,
