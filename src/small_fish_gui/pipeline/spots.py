@@ -114,6 +114,7 @@ def load_spots(
         Spots = pd.read_feather(table_path)
     else :
         raise ValueError("Table format not recognized. Please use .csv, .xlsx or .feather files.")
+    Spots = Spots.dropna(how='all') # drops empty lines
     
     if "coordinates" in Spots.columns :
         reconstructed_spots=reconstruct_spots(Spots["coordinates"])
